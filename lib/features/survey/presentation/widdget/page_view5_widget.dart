@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:survey/features/survey/presentation/widdget/page_view1_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/survey_bloc.dart';
 
 class PageView5 extends StatefulWidget {
   const PageView5({super.key});
@@ -11,6 +12,8 @@ class PageView5 extends StatefulWidget {
 
 class _PageView5State extends State<PageView5> {
   TextEditingController textController = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +27,8 @@ class _PageView5State extends State<PageView5> {
         Padding(
           padding: const EdgeInsets.all(12),
           child: Container(
-             color: const Color(0xFFF5F6F7),
               height: 200,
+               color: const Color(0xFFF5F6F7),
              child: Column(
            mainAxisAlignment: MainAxisAlignment.start,
                crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,6 +36,7 @@ class _PageView5State extends State<PageView5> {
                  TextField(
                    maxLines: 6,
                   controller: textController,
+                  onTap: () => context.read<SurveyBloc>().add(IsSelect(isSelect: textController.text.isNotEmpty ? false : true)),
                   decoration: const InputDecoration(
                     hintText: "Введите свой ответ",
                     fillColor: Color(0xFFF5F6F7),

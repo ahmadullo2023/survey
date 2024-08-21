@@ -13,3 +13,15 @@ class IsSelect extends SurveyEvent {
   final bool isSelect;
   IsSelect({required this.isSelect});
 }
+
+
+class GetSurveyEvent extends SurveyEvent {
+  final int bookId;
+  GetSurveyEvent({required this.bookId});
+}
+
+
+class SurveyRejectEvent extends SurveyEvent {
+  final String id;
+  SurveyRejectEvent({required this.id});
+}

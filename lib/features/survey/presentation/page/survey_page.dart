@@ -31,19 +31,27 @@ class _SurveyState extends State<Survey> {
 
   Widget continueWidget(state) => ElevatedButton(
         onPressed: () {
-          state.pageIndex == 7
-              ? Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const SurveyThankPage()))
-              : ();
-          context.read<SurveyBloc>().add(PageIndex(pageIndex: state.isSelect == true ? state.pageIndex + 1 : state.pageIndex));
+          if (state.pageIndex == 7) {
+            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SurveyThankPage()));
+          } else {
+            ();
+          }
+          context.read<SurveyBloc>().add(PageIndex(
+              pageIndex: state.isSelect == true
+                  ? state.pageIndex + 1
+                  : state.pageIndex));
           context.read<SurveyBloc>().add(IsSelect(isSelect: false));
-          controller.jumpToPage(state.pageIndex );
-            },
+          controller.jumpToPage(state.pageIndex);
+        },
         style: ElevatedButton.styleFrom(
             fixedSize: const Size(343, 44),
-            backgroundColor: state.isSelect == false ? const Color(0xFFC6CFD7) : const Color(0xFF4489F7),
+            backgroundColor: state.isSelect == false
+                ? const Color(0xFFC6CFD7)
+                : const Color(0xFF4489F7),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
             )),
@@ -57,27 +65,29 @@ class _SurveyState extends State<Survey> {
           width: 42,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5), color: colorName),
-          child: colorName == null ? null : Center(child: Text("${state.pageIndex}/7")),
+          child: colorName == null
+              ? null
+              : Center(child: Text("${state.pageIndex}/7")),
         ),
       );
 
   Widget appBarWidget(state) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          pageCounter(Color(0xFFF5F6F7), state),
+          pageCounter(const Color(0xFFF5F6F7), state),
           const Text("Ответьте на вопрос"),
           pageCounter(null, state),
         ],
       );
 
-  Widget pageView(state) => SizedBox(
+  Widget pageView(SurveyState state) => SizedBox(
         height: 500,
         child: PageView(
           physics: const NeverScrollableScrollPhysics(),
           scrollDirection: Axis.horizontal,
           controller: controller,
-          children: const [
-            PageView1(),
+          children:  [
+            PageView1(questions: state.surveyList.questions),
             PageView2(),
             PageView3(),
             PageView4(),
@@ -93,37 +103,37 @@ class _SurveyState extends State<Survey> {
     return BlocBuilder<SurveyBloc, SurveyState>(
         builder: (context, state) {
       return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        title: const Text(
-          "Опросник",
-          style: TextStyle(fontWeight: FontWeight.w600),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          automaticallyImplyLeading: false,
+          title: const Text(
+            "Опросник",
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          const Divider(
-            thickness: 1,
-            color: Color(0xFFE8F0FE),
-          ),
-          appBarWidget(state),
-          const SizedBox(height: 5),
-          LinearProgressIndicator(
-            minHeight: 2,
-            backgroundColor: Colors.blue[100],
-            color: Colors.blue,
-            value: state.pageIndex / 7,
-          ),
-          pageView(state),
-          const Spacer(),
-          continueWidget(state),
-          const SizedBox(height: 30),
-        ],
-      ),
+        body: Column(
+          children: [
+            const Divider(
+              thickness: 1,
+              color: Color(0xFFE8F0FE),
+            ),
+            appBarWidget(state),
+            const SizedBox(height: 5),
+            LinearProgressIndicator(
+              minHeight: 2,
+              backgroundColor: Colors.blue[100],
+              color: Colors.blue,
+              value: state.pageIndex / 7,
+            ),
+            pageView(state),
+            const Spacer(),
+            continueWidget(state),
+            const SizedBox(height: 30),
+          ],
+        ),
       );
-        }
-    );
+    });
   }
 }

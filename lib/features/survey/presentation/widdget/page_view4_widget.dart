@@ -45,10 +45,11 @@ class _PageView4State extends State<PageView4> {
 
 
 
-  Widget get numberListView=> Padding(
+  Widget get numberListView => Padding(
     padding: const EdgeInsets.all(0),
     child: SizedBox(
       child: ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemBuilder: (_, index) {
           return numberCard(index);

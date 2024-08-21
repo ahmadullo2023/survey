@@ -4,7 +4,9 @@ import 'package:flutter_svg/svg.dart';
 import '../bloc/survey_bloc.dart';
 
 class PageView1 extends StatefulWidget {
-  const PageView1({super.key, });
+   const PageView1({super.key, required this.questions});
+
+  final List questions;
 
   @override
   State<PageView1> createState() => _PageView1State();
@@ -31,7 +33,7 @@ class _PageView1State extends State<PageView1> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const SizedBox(height: 10),
-        const Text("Оцените, насколько вы довольны \n нашим приложением1",
+       Text(/*widget.questions.first*/"Оцените, насколько вы довольны \n нашим приложением1",
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
             textAlign: TextAlign.center),
         const SizedBox(height: 20),
