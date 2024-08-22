@@ -11,5 +11,9 @@ abstract class SurveyDataSource {
 
   Future<SurveyInfoModel> getSurveyList();
   Future<void> postRejectSurvey({required String id});
+  Future<void> postSurveyAnswer({required String surId, required String queId});
+
+
+
 
 }

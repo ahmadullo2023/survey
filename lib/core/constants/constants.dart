@@ -3,10 +3,10 @@ sealed class Constants {
   static const baseUrl = 'https://dev.commeta.uz/review/api/v1';
 }
 
-
 sealed class Urls {
   Urls._();
   static const String survey = '/front_office/SurveyInfo/';
+  static const String answer = '/front_office/SurveyAnswer/';
   static const String reject = '/front_office/SurveyReject/';
 
 }

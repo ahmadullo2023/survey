@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../domain/entities/survey_entities.dart';
 import '../bloc/survey_bloc.dart';
 
 class PageView5 extends StatefulWidget {
   const PageView5({super.key});
+
 
   @override
   State<PageView5> createState() => _PageView5State();
@@ -21,6 +23,7 @@ class _PageView5State extends State<PageView5> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const SizedBox(height: 10),
+       // Text(widget.survey.questions[4].question.toString(),
         const Text("Что вы думаете о нашем сервисе и продуктах?5",
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
             textAlign: TextAlign.center),

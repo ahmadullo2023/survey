@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:survey/features/survey/presentation/widdget/page_view1_widget.dart';
 
+import '../../domain/entities/survey_entities.dart';
+
 class PageView7 extends StatefulWidget {
   const PageView7({super.key});
 
@@ -40,7 +42,8 @@ class _PageView7State extends State<PageView7> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const SizedBox(height: 10),
-        const Text("Как вы оцениваете качество нашего сервиса?7",
+       // Text(widget.survey.questions[6].question.toString(),
+          const Text("Как вы оцениваете качество нашего сервиса?7",
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
             textAlign: TextAlign.center),
         const SizedBox(height: 10),

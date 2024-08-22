@@ -5,8 +5,8 @@ class Options {
   Options({this.id, this.choice});
 
   Options.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    choice = json['choice'];
+    id = json['id'] ?? "";
+    choice = json['choice'] ?? "";
   }
 
   Map<String, dynamic> toJson() {

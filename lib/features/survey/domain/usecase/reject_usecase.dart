@@ -5,8 +5,8 @@ import '../../../../core/singletons/service_locator.dart';
 import '../../../../core/usecase/usecase.dart';
 
 class RejectSurveyUseCase implements UseCase<void, String> {
-
   final RejectRepository rejectSurvey = serviceLocator<RejectRepositoryImpl>();
+
 
   @override
   Future<Either<Failure, void>> call(String id) async {

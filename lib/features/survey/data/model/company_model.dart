@@ -25,18 +25,18 @@ class Company {
         this.address});
 
   Company.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    slug = json['slug'];
-    oldReviewRating = json['old_review_rating'];
+    id = json['id'] ?? "";
+    name = json['name'] ?? "";
+    slug = json['slug'] ?? "";
+    oldReviewRating = json['old_review_rating'] ?? "";
     brandLogo = json['brand_logo'] != null
         ? new BrandLogo.fromJson(json['brand_logo'])
         : null;
-    verified = json['verified'];
-    type = json['type'];
-    isPrivate = json['is_private'];
-    reviewCount = json['review_count'];
-    address = json['address'];
+    verified = json['verified'] ?? "";
+    type = json['type'] ?? "";
+    isPrivate = json['is_private'] ?? "";
+    reviewCount = json['review_count'] ?? "";
+    address = json['address'] ?? "";
   }
 
   Map<String, dynamic> toJson() {

@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:survey/features/survey/presentation/widdget/page_view1_widget.dart';
 
+import '../../domain/entities/survey_entities.dart';
 import '../bloc/survey_bloc.dart';
 
 class PageView4 extends StatefulWidget {
-  const PageView4({super.key});
+  const PageView4({super.key,required this.survey});
+
+  final GetSurveyEntity survey;
 
   @override
   State<PageView4> createState() => _PageView4State();
@@ -19,7 +22,8 @@ class _PageView4State extends State<PageView4> {
   /// --- WIDGET ---
 
 
-  Widget get textFirst => const Text("Оцените, насколько вы довольны \n нашим приложением4",
+  Widget get textFirst => Text(widget.survey.questions[3].question.toString(),
+  //Text("Оцените, насколько вы довольны \n нашим приложением4",
       style: TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
       textAlign: TextAlign.center);
 

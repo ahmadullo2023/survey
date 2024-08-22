@@ -1,5 +1,3 @@
-
-
 class BrandLogo {
   String? id;
   String? original;
@@ -17,12 +15,12 @@ class BrandLogo {
         this.thumbnail});
 
   BrandLogo.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    original = json['original'];
-    s100x100 = json['s100x100'];
-    s500x500 = json['s500x500'];
-    s1000x1000 = json['s1000x1000'];
-    thumbnail = json['thumbnail'];
+    id = json['id'] ?? "";
+    original = json['original'] ?? "";
+    s100x100 = json['s100x100'] ?? "";
+    s500x500 = json['s500x500'] ?? "";
+    s1000x1000 = json['s1000x1000'] ?? "";
+    thumbnail = json['thumbnail'] ?? "";
   }
 
   Map<String, dynamic> toJson() {

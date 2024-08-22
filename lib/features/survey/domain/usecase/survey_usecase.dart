@@ -5,8 +5,8 @@ import '../../../../core/usecase/usecase.dart';
 import '../entities/survey_entities.dart';
 import '../repository/survey_repository.dart';
 
-class GetSurveyListUseCase implements UseCase<GetSurveyEntity,  NoParams> {
 
+class GetSurveyListUseCase implements UseCase<GetSurveyEntity,  NoParams> {
   final SurveyRepository surveyRepository = serviceLocator<SurveyRepositoryImpl>();
 
 
@@ -14,7 +14,6 @@ class GetSurveyListUseCase implements UseCase<GetSurveyEntity,  NoParams> {
   Future<Either<Failure, GetSurveyEntity>> call(
       NoParams params,
       ) async {
-    final response = await surveyRepository.getSurvey();
-    return response;
+    return await surveyRepository.getSurvey();
   }
 }

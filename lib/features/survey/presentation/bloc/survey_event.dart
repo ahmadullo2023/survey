@@ -16,12 +16,18 @@ class IsSelect extends SurveyEvent {
 
 
 class GetSurveyEvent extends SurveyEvent {
-  final int bookId;
-  GetSurveyEvent({required this.bookId});
+  GetSurveyEvent();
 }
 
 
 class SurveyRejectEvent extends SurveyEvent {
   final String id;
   SurveyRejectEvent({required this.id});
+}
+
+
+class SurveyAnswerEvent extends SurveyEvent {
+  final String surId;
+  final String queId;
+  SurveyAnswerEvent({required this.surId, required this.queId});
 }

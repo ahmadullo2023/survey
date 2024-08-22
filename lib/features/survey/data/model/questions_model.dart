@@ -12,10 +12,10 @@ class Questions {
   Questions({this.id, this.type, this.question, this.optionType, this.options});
 
   Questions.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    type = json['type'];
-    question = json['question'];
-    optionType = json['option_type'];
+    id = json['id'] ?? "" ;
+    type = json['type'] ?? "";
+    question = json['question'] ?? "";
+    optionType = json['option_type'] ?? "";
     if (json['options'] != null) {
       options = <Options>[];
       json['options'].forEach((v) {

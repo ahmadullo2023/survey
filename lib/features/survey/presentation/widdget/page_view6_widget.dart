@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:survey/features/survey/presentation/widdget/page_view1_widget.dart';
 
+import '../../domain/entities/survey_entities.dart';
 import '../bloc/survey_bloc.dart';
 
 class PageView6 extends StatefulWidget {
   const PageView6({super.key});
+
 
   @override
   State<PageView6> createState() => _PageView6State();
@@ -51,6 +53,7 @@ class _PageView6State extends State<PageView6> {
     return Column(
       children: <Widget>[
         const SizedBox(height: 10),
+        //Text(widget.survey.questions[5].question.toString(),
         const Text("Как вы оцениваете качество нашего сервиса?6",
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
             textAlign: TextAlign.center),

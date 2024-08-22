@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../domain/entities/survey_entities.dart';
 import '../bloc/survey_bloc.dart';
 
 class PageView2 extends StatefulWidget {
-  const PageView2({super.key});
+  const PageView2({super.key, required this.survey});
+
+  final GetSurveyEntity survey;
 
   @override
   State<PageView2> createState() => _PageView1State();
@@ -32,7 +35,8 @@ class _PageView1State extends State<PageView2> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const SizedBox(height: 10),
-        const Text("Оцените, насколько вы довольны \n нашим приложением1",
+        Text(widget.survey.questions[1].question.toString(),
+        //const Text("Оцените, насколько вы довольны \n нашим приложением1",
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
             textAlign: TextAlign.center),
         const SizedBox(height: 20),

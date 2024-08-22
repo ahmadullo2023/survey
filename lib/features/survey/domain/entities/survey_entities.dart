@@ -1,20 +1,7 @@
 import 'package:equatable/equatable.dart';
-import '../../data/model/company_model.dart';
 import '../../data/model/questions_model.dart';
-import '../../data/model/survey_info_model.dart';
 
 class GetSurveyEntity extends Equatable {
-  const GetSurveyEntity({
-    required this.surveyList,
-  });
-
-  final SurveyEntity surveyList;
-
-  @override
-  List<Object?> get props => [surveyList];
-}
-
-class SurveyEntity {
   final String id;
   final String title;
   final String startFrom;
@@ -25,7 +12,7 @@ class SurveyEntity {
   final List<Questions> questions;
   final int price;
 
-  const SurveyEntity({
+  const GetSurveyEntity({
       this.id = '',
       this.title = '',
       this.startFrom = '',
@@ -36,19 +23,7 @@ class SurveyEntity {
       this.questions = const [],
       this.price = 0
   });
-}
 
-extension GetSurveyxResponseEntity on SurveyInfoModel {
-  GetSurveyEntity toEntity() => GetSurveyEntity(
-        surveyList: SurveyEntity(
-          id: id ?? '',
-          title: title ?? '',
-          startFrom: startFrom ?? '',
-          endAt: endAt ?? '',
-          published: published ?? false,
-          paused: paused ?? false,
-          questions: questions ?? [],
-          price: price ?? 0,
-        ),
-      );
+  @override
+  List<Object?> get props => [id, title, startFrom, endAt, published, paused, questions, price];
 }

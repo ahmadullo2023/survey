@@ -4,7 +4,7 @@ part of 'survey_bloc.dart';
 class SurveyState extends Equatable {
   final int pageIndex;
   final bool isSelect;
-  final SurveyEntity surveyList;
+  final GetSurveyEntity surveyList;
   final FormzSubmissionStatus surveyStatus;
 
 
@@ -12,7 +12,7 @@ class SurveyState extends Equatable {
   const SurveyState({
     this.pageIndex = 1,
     this.isSelect = false,
-    this.surveyList = const SurveyEntity(),
+    this.surveyList = const GetSurveyEntity(),
     this.surveyStatus = FormzSubmissionStatus.initial,
 
   });
@@ -20,7 +20,7 @@ class SurveyState extends Equatable {
   SurveyState copyWith({
     int? pageIndex,
     bool? isSelect,
-    SurveyEntity? surveyList,
+    GetSurveyEntity? surveyList,
     FormzSubmissionStatus? surveyStatus,
 
   }) {
