@@ -85,5 +85,4 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
     ]));
   }
 
-
 }

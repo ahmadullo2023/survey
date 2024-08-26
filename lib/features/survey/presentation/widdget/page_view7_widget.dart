@@ -51,10 +51,8 @@ class _PageView7State extends State<PageView7> {
                       "rate": null,
                       "options": [
                         {
-                          "id":
-                              "${state.surveyList.questions[widget.index].options![optionIndex].id}",
-                          "choice":
-                              "${state.surveyList.questions[widget.index].options![optionIndex].choice}",
+                          "id": "${state.surveyList.questions[widget.index].options![optionIndex].id}",
+                          "choice": "${state.surveyList.questions[widget.index].options![optionIndex].choice}",
                         }
                       ]
                     },
