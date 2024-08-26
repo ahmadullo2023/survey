@@ -9,6 +9,8 @@ class SurveyThankPage extends StatefulWidget {
 }
 
 class _SurveyThankPageState extends State<SurveyThankPage> {
+
+
   ///   --- WIDGET ---
 
   Widget get greatWidget => ElevatedButton(
@@ -22,6 +24,19 @@ class _SurveyThankPageState extends State<SurveyThankPage> {
         child: const Text('Отлично', style: TextStyle(color: Colors.white)),
       );
 
+
+  Widget get textThankYou => const Text(
+    "Благодарим вас",
+    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+  );
+
+
+  Widget get bottomText => const Text(
+      "Ваши отзывы и советы помогают нам \nулучшаться и радовать вас наилучшими \nуслугами и сервисами",
+      textAlign: TextAlign.center);
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,14 +48,9 @@ class _SurveyThankPageState extends State<SurveyThankPage> {
             const Spacer(),
             const Spacer(),
             SvgPicture.asset("assets/icons/Frame2.svg"),
-            const Text(
-              "Благодарим вас",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
-            ),
+            textThankYou,
             const SizedBox(height: 10),
-            const Text(
-                "Ваши отзывы и советы помогают нам \nулучшаться и радовать вас наилучшими \nуслугами и сервисами",
-                textAlign: TextAlign.center),
+             bottomText,
             const SizedBox(height: 15),
             const Spacer(),
             greatWidget,

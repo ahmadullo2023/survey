@@ -1,12 +1,14 @@
 sealed class Constants {
   Constants._();
-  static const baseUrl = 'https://dev.commeta.uz/review/api/v1';
+  static const baseUrl = 'https://dev.commeta.uz/review/api/v1/front_office';
 }
 
 sealed class Urls {
   Urls._();
-  static const String survey = '/front_office/SurveyInfo/';
-  static const String answer = '/front_office/SurveyAnswer/';
-  static const String reject = '/front_office/SurveyReject/';
+  static const String survey = '/SurveyInfo/';
+  static const String answer = '/SurveyAnswer/';
+  static const String reject = '/SurveyReject/';
+  static const String finish = '/SurveyFinish/';
+
 
 }

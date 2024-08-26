@@ -2,23 +2,23 @@ import '../../../../core/either/either.dart';
 import '../../../../core/error/failure.dart';
 import '../../../../core/singletons/service_locator.dart';
 import '../../../../core/usecase/usecase.dart';
-import '../repository/answer_repository.dart';
+import '../repository/finish_repository.dart';
 
-class AnswerSurveyUseCase implements UseCase<void, AnswerSurveyParams> {
-  final AnswerRepository answerSurvey = serviceLocator<AnswerRepositoryImpl>();
+class FinishSurveyUseCase implements UseCase<void, FinishSurveyParams> {
+  final FinishRepository finishSurvey = serviceLocator<FinishRepositoryImpl>();
 
   @override
-  Future<Either<Failure, void>> call(AnswerSurveyParams params) async {
-    return await answerSurvey.postSurveyAnswer(
+  Future<Either<Failure, void>> call(FinishSurveyParams params) async {
+    return await finishSurvey.postSurveyFinish(
         surId: params.surId, queId: params.queId, optionsData: params.optionsData);
   }
 }
 
-class AnswerSurveyParams {
+class FinishSurveyParams {
   final String surId;
   final String queId;
   final Map<String, dynamic> optionsData;
 
-  AnswerSurveyParams(
+  FinishSurveyParams(
       {required this.surId, required this.queId, required this.optionsData});
 }

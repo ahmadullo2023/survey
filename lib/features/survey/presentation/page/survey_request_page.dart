@@ -5,7 +5,6 @@ import 'package:gradient_elevated_button/gradient_elevated_button.dart';
 import 'package:survey/features/survey/presentation/page/survey_page.dart';
 import '../bloc/survey_bloc.dart';
 
-
 class SurveyRequest extends StatefulWidget {
   const SurveyRequest({super.key});
 
@@ -13,62 +12,76 @@ class SurveyRequest extends StatefulWidget {
   State<SurveyRequest> createState() => _SurveyRequestState();
 }
 
-
 class _SurveyRequestState extends State<SurveyRequest> {
-
   @override
   void initState() {
     super.initState();
-   context.read<SurveyBloc>().add(GetSurveyEvent());
+    context.read<SurveyBloc>().add(GetSurveyEvent());
   }
 
   /// --- WIDGET ---
 
   Widget wButtons(BuildContext context, SurveyState state) => Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: [
-      ElevatedButton(
-        onPressed: () {
-          context.read<SurveyBloc>().add(
-            SurveyRejectEvent(id: state.surveyList.id),
-          );
-         Navigator.pop(context);
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              context.read<SurveyBloc>().add(
+                    SurveyRejectEvent(id: state.surveyList.id),
+                  );
+              Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(
+                elevation: 0,
+                fixedSize: const Size(166, 44),
+                backgroundColor: const Color(0xFFF5F6F7),
+                shape: RoundedRectangleBorder(
+                  side: BorderSide.none,
+                  borderRadius: BorderRadius.circular(5),
+                )),
+            child: const Text("Отмена", style: TextStyle(color: Colors.black)),
+          ),
+          GradientElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const Survey()));
+            },
+            style: GradientElevatedButton.styleFrom(
+                fixedSize: const Size(166, 44),
+                shape: RoundedRectangleBorder(
+                  side: BorderSide.none,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                gradient: const LinearGradient(
+                  colors: [
+                    Color(0xFF73CF11),
+                    Color(0xFF00B67A),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                )),
+            child: const Text('Да', style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      );
 
-        },
-        style: ElevatedButton.styleFrom(
-            elevation: 0,
-            fixedSize: const Size(166, 44),
-            backgroundColor: const Color(0xFFF5F6F7),
-            shape: RoundedRectangleBorder(
-              side: BorderSide.none,
-              borderRadius: BorderRadius.circular(5),
-            )),
-        child: const Text("Отмена", style: TextStyle(color: Colors.black)),
-      ),
 
-      GradientElevatedButton(
-        onPressed: () {
-          Navigator.pop(context);
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => const Survey()));
-        },
-        style: GradientElevatedButton.styleFrom(
-            fixedSize: const Size(166, 44),
-            shape: RoundedRectangleBorder(
-              side: BorderSide.none,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            gradient: const LinearGradient(colors: [
-              Color(0xFF73CF11),
-              Color(0xFF00B67A),
-            ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            )),
-        child: const Text('Да', style: TextStyle(color: Colors.white)),
+  Widget get reward => Container(
+      width: 142,
+      height: 41,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: const Color(0xFFEBF7F1),
       ),
-    ],
-  );
+      child: const Center(
+          child: Text(
+            //state.surveyList.price.toString(),
+            "30 000 UZS",
+            style: const TextStyle(
+                color: Color(0xFF00B67A), fontWeight: FontWeight.w800),
+          )));
+
 
   Widget awardText(SurveyState state) => Padding(
       padding: const EdgeInsets.all(1),
@@ -79,22 +92,10 @@ class _SurveyRequestState extends State<SurveyRequest> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               const Text("Награда"),
-              Container(
-                  width: 142,
-                  height: 41,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: const Color(0xFFEBF7F1),
-                  ),
-                  child: const Center(
-                      child: Text(
-                        //state.surveyList.price.toString(),
-                        "30 000 UZS",
-                        style: const TextStyle(
-                            color: Color(0xFF00B67A), fontWeight: FontWeight.w800),
-                      ))),
+              reward,
             ],
           )));
+
 
   Widget award(SurveyState state) => Container(
       height: 91,
@@ -106,41 +107,40 @@ class _SurveyRequestState extends State<SurveyRequest> {
       child: awardText(state));
 
 
+  Widget get textWellBeGlad => const Text(
+        "Будем рады за отдачу 🤗",
+        style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+      );
+
+
+  Widget get questionnaire => const Text(
+      "Пройдите ещё один опросник и внесите вклад в улучшение наших услуг",
+      textAlign: TextAlign.center);
+
+
   @override
   Widget build(BuildContext context) {
-
-    return BlocBuilder<SurveyBloc, SurveyState>(
-        builder: (context, state) {
-
-          // print("HiHiHi${state.surveyList.title}");
-          // print("Status   ${state.surveyStatus}");
-
-          return Scaffold(
-            backgroundColor: Colors.white,
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Spacer(),
-                  const Spacer(),
-                  SvgPicture.asset("assets/icons/Frame.svg"),
-                  const Text(
-                    "Будем рады за отдачу 🤗",
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
-                  ),
-                  const Text(
-                      "Пройдите ещё один опросник и внесите вклад в улучшение наших услуг",
-                      textAlign: TextAlign.center),
-                  const SizedBox(height: 15),
-                  award(state),
-                  const Spacer(),
-                  wButtons(context, state),
-                  const SizedBox(height: 40),
-                ],
-              ),
-            ),
-          );
-        }
-    );
+    return BlocBuilder<SurveyBloc, SurveyState>(builder: (context, state) {
+      return Scaffold(
+        backgroundColor: Colors.white,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Spacer(),
+              const Spacer(),
+              SvgPicture.asset("assets/icons/Frame.svg"),
+              textWellBeGlad,
+              questionnaire,
+              const SizedBox(height: 15),
+              award(state),
+              const Spacer(),
+              wButtons(context, state),
+              const SizedBox(height: 40),
+            ],
+          ),
+        ),
+      );
+    });
   }
 }

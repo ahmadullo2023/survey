@@ -19,7 +19,6 @@ class Survey extends StatefulWidget {
 
 class _SurveyState extends State<Survey> {
   late PageController controller = PageController();
-  int index = 1;
 
   @override
   void dispose() {
@@ -29,9 +28,11 @@ class _SurveyState extends State<Survey> {
 
   /// --- WIDGET ---
 
-  Widget continueWidget(state) => ElevatedButton(
+
+  Widget continueWidget(BuildContext context, SurveyState state) =>
+      ElevatedButton(
         onPressed: () {
-          if (state.pageIndex == 7) {
+          if (state.pageIndex == state.surveyList.questions.length - 1 && state.isSelect == true) {
             Navigator.pop(context);
             Navigator.push(
                 context,
@@ -40,12 +41,21 @@ class _SurveyState extends State<Survey> {
           } else {
             ();
           }
-          context.read<SurveyBloc>().add(PageIndex(
+          context.read<SurveyBloc>().add(PageIndexEvent(
               pageIndex: state.isSelect == true
                   ? state.pageIndex + 1
                   : state.pageIndex));
           context.read<SurveyBloc>().add(IsSelect(isSelect: false));
-          controller.jumpToPage(state.pageIndex);
+          controller.jumpToPage(
+              state.isSelect == false ? state.pageIndex : state.pageIndex + 1);
+
+          context.read<SurveyBloc>().add(
+                SurveyAnswerEvent(
+                  surId: state.temporaryStatus[0],
+                  queId: state.temporaryStatus[1],
+                  optionsData: state.temporaryStatus[2],
+                ),
+              );
         },
         style: ElevatedButton.styleFrom(
             fixedSize: const Size(343, 44),
@@ -58,6 +68,7 @@ class _SurveyState extends State<Survey> {
         child: const Text('Продолжить', style: TextStyle(color: Colors.white)),
       );
 
+
   Widget pageCounter(colorName, state) => Padding(
         padding: const EdgeInsets.all(8),
         child: Container(
@@ -67,9 +78,12 @@ class _SurveyState extends State<Survey> {
               borderRadius: BorderRadius.circular(5), color: colorName),
           child: colorName == null
               ? null
-              : Center(child: Text("${state.pageIndex}/7")),
+              : Center(
+                  child: Text(
+                      "${state.pageIndex + 1}/${state.surveyList.questions.length}")),
         ),
       );
+
 
   Widget appBarWidget(state) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,28 +94,64 @@ class _SurveyState extends State<Survey> {
         ],
       );
 
-  Widget pageView(SurveyState state) => SizedBox(
-        height: 500,
-        child: PageView(
-          physics: const NeverScrollableScrollPhysics(),
-          scrollDirection: Axis.horizontal,
-          controller: controller,
-          children:  [
-            PageView1(survey: state.surveyList),
-            PageView2(survey: state.surveyList),
-            PageView3(survey: state.surveyList),
-            PageView4(survey: state.surveyList),
-            PageView5(),
-            PageView6(),
-            PageView7(),
-          ],
-        ),
+
+  PageView pageView(SurveyState state) => PageView.builder(
+        itemCount: state.surveyList.questions.length,
+        physics: const NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        controller: controller,
+        itemBuilder: (context, int index) {
+          if (state.surveyList.questions[index].type == 'scale_rating' &&
+              state.surveyList.questions[index].optionType == "stars") {
+            return PageView1(
+              survey: state.surveyList,
+              index: index,
+            );
+          } else if (state.surveyList.questions[index].type == 'scale_rating' &&
+              state.surveyList.questions[index].optionType == "emoji") {
+            return PageView2(
+              survey: state.surveyList,
+              index: index,
+            );
+          } else if (state.surveyList.questions[index].type == 'scale_rating' &&
+              state.surveyList.questions[index].optionType == "slider") {
+            return PageView3(
+              survey: state.surveyList,
+              index: index,
+            );
+          } else if (state.surveyList.questions[index].type == 'scale_rating' &&
+              state.surveyList.questions[index].optionType == "number") {
+            return PageView4(
+              survey: state.surveyList,
+              index: index,
+            );
+          } else if (state.surveyList.questions[index].type == 'text') {
+            return PageView5(
+              survey: state.surveyList,
+              index: index,
+            );
+          } else if (state.surveyList.questions[index].type ==
+              'single_choice') {
+            return PageView6(
+              survey: state.surveyList,
+              index: index,
+            );
+          } else if (state.surveyList.questions[index].type ==
+              'multiple_choices') {
+            return PageView7(
+              survey: state.surveyList,
+              index: index,
+            );
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
       );
+
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SurveyBloc, SurveyState>(
-        builder: (context, state) {
+    return BlocBuilder<SurveyBloc, SurveyState>(builder: (context, state) {
       return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
@@ -125,11 +175,11 @@ class _SurveyState extends State<Survey> {
               minHeight: 2,
               backgroundColor: Colors.blue[100],
               color: Colors.blue,
-              value: state.pageIndex / 7,
+              value: state.pageIndex / (state.surveyList.questions.length),
             ),
-            pageView(state),
+            SizedBox(height: 550, child: pageView(state)),
             const Spacer(),
-            continueWidget(state),
+            continueWidget(context, state),
             const SizedBox(height: 30),
           ],
         ),

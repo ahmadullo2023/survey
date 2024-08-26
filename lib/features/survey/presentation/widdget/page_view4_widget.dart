@@ -6,77 +6,81 @@ import '../../domain/entities/survey_entities.dart';
 import '../bloc/survey_bloc.dart';
 
 class PageView4 extends StatefulWidget {
-  const PageView4({super.key,required this.survey});
+  const PageView4({super.key, required this.survey, required this.index});
 
   final GetSurveyEntity survey;
+  final int index;
 
   @override
   State<PageView4> createState() => _PageView4State();
 }
 
 class _PageView4State extends State<PageView4> {
-
   int colorNum = 0;
-
 
   /// --- WIDGET ---
 
-
-  Widget get textFirst => Text(widget.survey.questions[3].question.toString(),
-  //Text("Оцените, насколько вы довольны \n нашим приложением4",
-      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
+  Widget get textFirst => Text(widget.survey.questions[widget.index].question.toString(),
+      style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
       textAlign: TextAlign.center);
 
 
-  Widget numberCard(index) => Row(
-      children: [
+  Widget numberCard(index, SurveyState state) => Row(children: [
         GestureDetector(
             onTap: () {
               setState(() {
-               colorNum = index;
+                colorNum = index;
                 context.read<SurveyBloc>().add(IsSelect(isSelect: true));
               });
-              },
+              context.read<SurveyBloc>().add(TemporaryAnsEvent(
+                temporarySurId: state.surveyList.id,
+                temporaryQueId: state.surveyList.questions[widget.index].id!,
+                temporaryOptions: {
+                  "answer": null,
+                  "rate": index,
+                  "options": const []
+                },
+              ));
+            },
             child: Container(
-                  color: colorNum == index ? const Color(0xFFE8F0FE) : null,
-                  width: 22,
-                  child: Center(
-                      child: Text("${index + 1}",
-                          style: const TextStyle(
-                              color: Color(0xFFC6CFD7)))))),
+                color: colorNum == index ? const Color(0xFFE8F0FE) : null,
+                width: 22,
+                child: Center(
+                    child: Text("${index + 1}",
+                        style: const TextStyle(color: Color(0xFFC6CFD7)))))),
         const VerticalDivider(color: Color(0xFFC6CFD7), thickness: 1)
       ]);
 
 
 
-  Widget get numberListView => Padding(
-    padding: const EdgeInsets.all(0),
-    child: SizedBox(
-      child: ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (_, index) {
-          return numberCard(index);
-        },
-        itemCount: 10,
-      ),
-    ),
-  );
+  Widget numberListView(SurveyState state) => Padding(
+        padding: const EdgeInsets.all(0),
+        child: SizedBox(
+          child: ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (_, index) {
+              return numberCard(index, state);
+            },
+            itemCount: 10,
+          ),
+        ),
+      );
 
 
 
-  Widget get numberSelect => Padding(
-    padding: const EdgeInsets.all(12),
-    child: Container(
-      height: 30,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: const Color(0xFFF5F6F7),
-      ),
-      child: numberListView,
-    ),
-  );
+  Widget numberSelect(SurveyState state) => Padding(
+        padding: const EdgeInsets.all(12),
+        child: Container(
+          height: 30,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: const Color(0xFFF5F6F7),
+          ),
+          child: numberListView(state),
+        ),
+      );
 
 
 
@@ -84,12 +88,12 @@ class _PageView4State extends State<PageView4> {
   Widget build(BuildContext context) {
     return BlocBuilder<SurveyBloc, SurveyState>(
         builder: (context, state) => Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const SizedBox(height: 10),
-        textFirst,
-        numberSelect,
-      ],
-    ));
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 10),
+                textFirst,
+                numberSelect(state),
+              ],
+            ));
   }
 }
