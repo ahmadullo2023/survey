@@ -34,6 +34,19 @@ class SurveyAnswerEvent extends SurveyEvent {
       {required this.surId, required this.queId, required this.optionsData});
 }
 
+
+class SurveyFinishEvent extends SurveyEvent {
+  final String surId;
+  final String queId;
+  final Map<String, dynamic> optionsData;
+
+  SurveyFinishEvent(
+      {required this.surId, required this.queId, required this.optionsData});
+}
+
+
+
+
 class TemporaryAnsEvent extends SurveyEvent {
   final String temporarySurId;
   final String temporaryQueId;

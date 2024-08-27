@@ -32,7 +32,8 @@ class _SurveyState extends State<Survey> {
   Widget continueWidget(BuildContext context, SurveyState state) =>
       ElevatedButton(
         onPressed: () {
-          if (state.pageIndex == state.surveyList.questions.length - 1 && state.isSelect == true) {
+          if (state.pageIndex == state.surveyList.questions.length - 1 &&
+              state.isSelect == true) {
             Navigator.pop(context);
             Navigator.push(
                 context,
@@ -149,20 +150,42 @@ class _SurveyState extends State<Survey> {
       );
 
 
+  AppBar widgetAppBar(SurveyState state) => AppBar(
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        title: const Text(
+          "Опросник",
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.read<SurveyBloc>().add(
+                    SurveyAnswerEvent(
+                      surId: state.temporaryStatus[0],
+                      queId: state.temporaryStatus[1],
+                      optionsData: state.temporaryStatus[2],
+                    ),
+                  );
+            },
+            icon: const Icon(
+              Icons.clear,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      );
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SurveyBloc, SurveyState>(builder: (context, state) {
       return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
-          title: const Text(
-            "Опросник",
-            style: TextStyle(fontWeight: FontWeight.w600),
-          ),
-        ),
+        appBar: widgetAppBar(state),
         body: Column(
           children: [
             const Divider(

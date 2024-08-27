@@ -5,6 +5,7 @@ import '../../../../core/usecase/usecase.dart';
 import '../../../../core/utils/formz.dart';
 import '../../domain/entities/survey_entities.dart';
 import '../../domain/usecase/answer_usecase.dart';
+import '../../domain/usecase/finish_usecase.dart';
 import '../../domain/usecase/reject_usecase.dart';
 import '../../domain/usecase/survey_usecase.dart';
 
@@ -15,6 +16,9 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
   final GetSurveyListUseCase getSurveyUseCase = GetSurveyListUseCase();
   final RejectSurveyUseCase rejectSurveyUseCase = RejectSurveyUseCase();
   final AnswerSurveyUseCase answerSurveyUseCase = AnswerSurveyUseCase();
+  final FinishSurveyUseCase finishSurveyUseCase = FinishSurveyUseCase();
+
+
 
   SurveyBloc() : super(const SurveyState()) {
     on<PageIndexEvent>(_pageIndex);
@@ -22,6 +26,7 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
     on<GetSurveyEvent>(_getSurveyList);
     on<SurveyRejectEvent>(_surveyReject);
     on<SurveyAnswerEvent>(_surveyAnswer);
+    on<SurveyFinishEvent>(_surveyFinish);
     on<TemporaryAnsEvent>(_temporaryAns);
   }
 
@@ -68,6 +73,19 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
       SurveyAnswerEvent event, Emitter<SurveyState> emit) async {
     emit(state.copyWith(surveyStatus: FormzSubmissionStatus.inProgress));
     final result = await answerSurveyUseCase.call(AnswerSurveyParams(
+        surId: event.surId, queId: event.queId, optionsData: event.optionsData));
+    result.fold((error) {
+      emit(state.copyWith(surveyStatus: FormzSubmissionStatus.failure));
+    }, (result) {
+      emit(state.copyWith(surveyStatus: FormzSubmissionStatus.success));
+    });
+  }
+
+
+  Future<void> _surveyFinish(
+      SurveyFinishEvent event, Emitter<SurveyState> emit) async {
+    emit(state.copyWith(surveyStatus: FormzSubmissionStatus.inProgress));
+    final result = await finishSurveyUseCase.call(FinishSurveyParams(
         surId: event.surId, queId: event.queId, optionsData: event.optionsData));
     result.fold((error) {
       emit(state.copyWith(surveyStatus: FormzSubmissionStatus.failure));

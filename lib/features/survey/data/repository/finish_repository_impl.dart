@@ -1,7 +1,7 @@
 part of '../../domain/repository/finish_repository.dart';
 
 class FinishRepositoryImpl implements FinishRepository {
-  final SurveyDataSource answerDataSource =
+  final SurveyDataSource finishDataSource =
   serviceLocator<SurveyDataSourceImpl>();
 
   @override
@@ -10,7 +10,7 @@ class FinishRepositoryImpl implements FinishRepository {
         required String queId,
         required Map<String, dynamic> optionsData}) async {
     try {
-      final response = await answerDataSource.postSurveyAnswer(
+      final response = await finishDataSource.postSurveyAnswer(
           surId: surId, queId: queId, optionsData: optionsData);
       return Right(response);
     } on Exception catch (e) {
