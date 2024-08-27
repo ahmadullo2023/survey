@@ -9,10 +9,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SurveyBloc(),
-      child: const MaterialApp(
-      home: FirstPage(),
-      )
-    );
+        create: (context) => SurveyBloc(),
+        child: const MaterialApp(
+          home: FirstPage(),
+        ));
   }
 }

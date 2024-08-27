@@ -57,6 +57,13 @@ class _SurveyState extends State<Survey> {
                   optionsData: state.temporaryStatus[2],
                 ),
               );
+
+
+          // print(state.temporaryStatus[0]);
+          // print(state.temporaryStatus[1]);
+          // print(state.temporaryStatus[2]);
+
+
         },
         style: ElevatedButton.styleFrom(
             fixedSize: const Size(343, 44),
@@ -175,7 +182,6 @@ class _SurveyState extends State<Survey> {
           ),
         ],
       );
-
 
 
 
