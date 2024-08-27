@@ -58,7 +58,6 @@ class _SurveyState extends State<Survey> {
                 ),
               );
 
-
           // print(state.temporaryStatus[0]);
           // print(state.temporaryStatus[1]);
           // print(state.temporaryStatus[2]);
@@ -192,7 +191,7 @@ class _SurveyState extends State<Survey> {
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar: widgetAppBar(state),
-        body: Column(
+        body: state.surveyList.questions.isNotEmpty ? Column(
           children: [
             const Divider(
               thickness: 1,
@@ -211,8 +210,8 @@ class _SurveyState extends State<Survey> {
             continueWidget(context, state),
             const SizedBox(height: 30),
           ],
-        ),
-      );
+        ) : const Center(child: CircularProgressIndicator()),
+      ) ;
     });
   }
 }

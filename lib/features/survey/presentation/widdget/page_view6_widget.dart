@@ -39,10 +39,8 @@ class _PageView6State extends State<PageView6> {
                     temporaryOptions: {
                       "answer": null,
                       "rate": null,
-                      "options": [{
-                        "id": "${state.surveyList.questions[widget.index].options![index].id}",
-                        "choice": "${state.surveyList.questions[widget.index].options![index].choice}",
-                      }
+                      "options": [
+                       "${state.surveyList.questions[widget.index].options![index].id}",
                       ]
                     },
                   ));
