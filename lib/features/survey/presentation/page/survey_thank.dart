@@ -15,7 +15,7 @@ class _SurveyThankPageState extends State<SurveyThankPage> {
 
   Widget get greatWidget => ElevatedButton(
         onPressed: () {
-          Navigator.pop(context);
+          //Navigator.of(context).pop();
         },
         style: ElevatedButton.styleFrom(
             fixedSize: const Size(343, 44),

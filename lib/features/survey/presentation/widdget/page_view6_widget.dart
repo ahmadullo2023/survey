@@ -14,53 +14,70 @@ class PageView6 extends StatefulWidget {
 }
 
 class _PageView6State extends State<PageView6> {
-  int selectedValue = 0;
-  int? _selectedValue;
+  int selectedValue = -1;
 
   /// --- WIDGETS ---
 
-  Widget answerListTile(int index, SurveyState state) => ListTile(
-        title: Text(widget.survey.questions[widget.index].options![index].choice
-            .toString()),
-        trailing: Radio(
-          activeColor: Colors.blue,
-          value: index,
-          groupValue: _selectedValue,
-          onChanged: (int? value) {
-            setState(() {
-              context.read<SurveyBloc>().add(IsSelect(isSelect: true));
-
-              _selectedValue = value;
-
-              context.read<SurveyBloc>().add(TemporaryAnsEvent(
-                    temporarySurId: state.surveyList.id,
-                    temporaryQueId:
-                        state.surveyList.questions[widget.index].id!,
-                    temporaryOptions: {
-                      "answer": null,
-                      "rate": null,
-                      "options": [
-                       "${state.surveyList.questions[widget.index].options![index].id}",
-                      ]
-                    },
-                  ));
-            });
-          },
+  Widget answerListTile(int index, SurveyState state, selectedValue) =>
+      ListTile(
+        title: Text(widget.survey.questions[widget.index].options![index].choice.toString()),
+        trailing: DecoratedBox(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              color: selectedValue == index
+                  ? const Color(0xFF4489F7)
+                  : const Color(0xFFE0E5E9),
+              width: 3,
+            ),
+            shape: BoxShape.circle,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(6),
+            child: CircleAvatar(
+              radius: 5,
+              backgroundColor: selectedValue == index
+                  ? const Color(0xFF4489F7)
+                  : Colors.white,
+            ),
+          ),
         ),
       );
 
 
-  Widget answerCard(int index, SurveyState state) => Card(
+  Widget answerCard(int index, SurveyState state) => GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedValue = index;
+          context.read<SurveyBloc>().add(IsSelect(isSelect: true));
+        });
+
+        context.read<SurveyBloc>().add(TemporaryAnsEvent(
+              temporarySurId: state.surveyList.id,
+              temporaryQueId: state.surveyList.questions[widget.index].id!,
+              temporaryOptions: {
+                "answer": null,
+                "rate": null,
+                "options": [
+                  "${state.surveyList.questions[widget.index].options![index].id}",
+                ]
+              },
+            ));
+      },
+
+
+      child: Card(
         elevation: 0,
         color: Colors.white,
         shape: RoundedRectangleBorder(
-            side: const BorderSide(
-              color: Color(0xFFE0E5E9),
-            ),
-            borderRadius: BorderRadius.circular(15.0)),
-        child: answerListTile(index, state),
-      );
-
+          side: BorderSide(
+            color:
+                selectedValue == index ? Colors.blue : const Color(0xFFE0E5E9),
+          ),
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: answerListTile(index, state, selectedValue),
+      ));
 
   Widget answerListView(SurveyState state) => SizedBox(
         height: 430,
@@ -72,11 +89,9 @@ class _PageView6State extends State<PageView6> {
         ),
       );
 
-
   Widget get questionText => Text(widget.survey.questions[widget.index].question.toString(),
-          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
-          textAlign: TextAlign.center);
-
+      style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
+      textAlign: TextAlign.center);
 
   @override
   Widget build(BuildContext context) {

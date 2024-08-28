@@ -6,7 +6,8 @@ import '../../domain/entities/survey_entities.dart';
 import '../bloc/survey_bloc.dart';
 
 class PageView7 extends StatefulWidget {
-  const PageView7({super.key, required this.survey, required this.index});
+  const PageView7({super.key, required this.survey, required this.index
+  });
 
   final GetSurveyEntity survey;
   final int index;
@@ -17,21 +18,23 @@ class PageView7 extends StatefulWidget {
 
 class _PageView7State extends State<PageView7> {
   bool isChecked = false;
+  int isCheek = 0;
 
-  List<bool> _selected = [false, false, false, false, false];
 
-  Widget cheekBoxCard(optionIndex, SurveyState state) => Card(
+  List  _items =  ["EDKED","EDKED","EDKED","EDKED"];
+  List<bool> _selected = [false, false, false, false];
+
+  Widget cheekBoxCard(optionIndex, SurveyState state) =>
+        Card(
         elevation: 0,
         color: Colors.white,
         shape: RoundedRectangleBorder(
-            side: const BorderSide(
-              color: Color(0xFFE0E5E9),
+            side: BorderSide(
+           color: _selected[optionIndex] == true ? const Color(0xFF4489F7) : const Color(0xFFE0E5E9),
             ),
             borderRadius: BorderRadius.circular(15.0)),
         child: ListTile(
-          title: Text(widget
-              .survey.questions[widget.index].options![optionIndex].choice
-              .toString()),
+          title: Text(widget.survey.questions[widget.index].options![optionIndex].choice.toString()),
           trailing: Checkbox(
             activeColor: Colors.blue,
             value: _selected[optionIndex], // isChecked,
@@ -54,6 +57,7 @@ class _PageView7State extends State<PageView7> {
                       ]
                     },
                   ));
+
             },
           ),
         ),
@@ -74,9 +78,8 @@ class _PageView7State extends State<PageView7> {
           SizedBox(
             height: 430,
             child: ListView.builder(
-                //itemCount: _items.length,
-                itemCount:
-                    widget.survey.questions[widget.index].options!.length,
+               itemCount: 4,
+               //widget.survey.questions[widget.index].options!.length,
                 itemBuilder: (context, optionIndex) {
                   return cheekBoxCard(optionIndex, state);
                 }),

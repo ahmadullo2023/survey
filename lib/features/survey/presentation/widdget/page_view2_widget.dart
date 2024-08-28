@@ -27,6 +27,7 @@ class _PageView1State extends State<PageView2> {
                   .read<SurveyBloc>()
                   .add(IsSelect(isSelect: number == 0 ? false : true));
             });
+
             context.read<SurveyBloc>().add(TemporaryAnsEvent(
               temporarySurId: state.surveyList.id,
               temporaryQueId: state.surveyList.questions[widget.index].id!,
@@ -47,8 +48,7 @@ class _PageView1State extends State<PageView2> {
       );
 
 
-  Widget get textQuestion => Text(
-      widget.survey.questions[widget.index].question.toString(),
+  Widget get textQuestion => Text(widget.survey.questions[widget.index].question.toString(),
       style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
       textAlign: TextAlign.center);
 

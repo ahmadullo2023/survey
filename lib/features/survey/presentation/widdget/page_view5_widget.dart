@@ -13,13 +13,29 @@ class PageView5 extends StatefulWidget {
   State<PageView5> createState() => _PageView5State();
 }
 
+
+
 class _PageView5State extends State<PageView5> {
   TextEditingController surveyTextController = TextEditingController();
 
+  final FocusNode _focusNode = FocusNode();
+  Color fillColor = const Color(0xFFF5F6F7);
+
+  @override
+  void initState() {
+    _focusNode.addListener(() {
+      setState(() {
+        fillColor =
+        _focusNode.hasFocus ? Colors.white : const Color(0xFFF5F6F7);
+      });
+    });
+    super.initState();
+  }
+
   /// --- WIDGETS ---
 
-  Widget get textQuestion =>
-      Text(widget.survey.questions[widget.index].question.toString(),
+
+  Widget get textQuestion => Text(widget.survey.questions[widget.index].question.toString(),
           style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
           textAlign: TextAlign.center);
 
@@ -27,7 +43,7 @@ class _PageView5State extends State<PageView5> {
         padding: const EdgeInsets.all(12),
         child: Container(
           height: 200,
-          color: const Color(0xFFF5F6F7),
+         // color: const Color(0xFFF5F6F7),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,6 +51,7 @@ class _PageView5State extends State<PageView5> {
               TextField(
                 maxLines: 6,
                 controller: surveyTextController,
+                focusNode: _focusNode,
                 onChanged: (textController) {
                   context.read<SurveyBloc>().add(IsSelect(
                       isSelect: textController.isEmpty ? false : true));
@@ -49,13 +66,20 @@ class _PageView5State extends State<PageView5> {
                           "options": const []
                         },
                       ));
+
                 },
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: "Введите свой ответ",
-                  fillColor: Color(0xFFF5F6F7),
+                  fillColor: fillColor,
                   filled: true,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
+                  focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    borderSide: BorderSide(color: Colors.blue, width: 1),
+                  ),
+                  enabledBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    borderSide: BorderSide(color: Colors.white, width: 1),
+                  )
                 ),
                 maxLength: 100,
               ),

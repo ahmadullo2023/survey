@@ -16,15 +16,13 @@ class PageView4 extends StatefulWidget {
 }
 
 class _PageView4State extends State<PageView4> {
-  int colorNum = 0;
+  int colorNum = -1;
 
   /// --- WIDGET ---
 
   Widget get textFirst => Text(widget.survey.questions[widget.index].question.toString(),
       style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
       textAlign: TextAlign.center);
-
-
 
   Widget numberCard(index, SurveyState state) => Row(children: [
         GestureDetector(
@@ -45,13 +43,19 @@ class _PageView4State extends State<PageView4> {
             },
             child: Container(
                 color: colorNum == index ? const Color(0xFFE8F0FE) : null,
-                width: 22,
+                width: 36,
                 child: Center(
                     child: Text("${index + 1}",
                         style: const TextStyle(color: Color(0xFFC6CFD7)))))),
-        const VerticalDivider(color: Color(0xFFC6CFD7), thickness: 1)
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 4),
+          width: 1,
+          decoration: BoxDecoration(
+            color: const Color(0xFFC6CFD7),
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
       ]);
-
 
 
   Widget numberListView(SurveyState state) => Padding(
@@ -68,8 +72,6 @@ class _PageView4State extends State<PageView4> {
         ),
       );
 
-
-
   Widget numberSelect(SurveyState state) => Padding(
         padding: const EdgeInsets.all(12),
         child: Container(
@@ -82,8 +84,6 @@ class _PageView4State extends State<PageView4> {
           child: numberListView(state),
         ),
       );
-
-
 
   @override
   Widget build(BuildContext context) {

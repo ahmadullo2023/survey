@@ -13,6 +13,8 @@ class SurveyRequest extends StatefulWidget {
 }
 
 class _SurveyRequestState extends State<SurveyRequest> {
+
+
   @override
   void initState() {
     super.initState();
@@ -67,7 +69,7 @@ class _SurveyRequestState extends State<SurveyRequest> {
       );
 
 
-  Widget get reward => Container(
+  Widget reward(SurveyState state) => Container(
       width: 142,
       height: 41,
       decoration: BoxDecoration(
@@ -92,7 +94,7 @@ class _SurveyRequestState extends State<SurveyRequest> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               const Text("Награда"),
-              reward,
+              reward(state),
             ],
           )));
 
@@ -133,7 +135,7 @@ class _SurveyRequestState extends State<SurveyRequest> {
               textWellBeGlad,
               questionnaire,
               const SizedBox(height: 15),
-              award(state),
+              state.surveyList.price == 0 ? const SizedBox() : award(state),
               const Spacer(),
               wButtons(context, state),
               const SizedBox(height: 40),
