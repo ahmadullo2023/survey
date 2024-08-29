@@ -47,11 +47,12 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
     result.fold(
       (error) {
         emit(state.copyWith(surveyStatus: FormzSubmissionStatus.failure));
+        print("--------------ERROR Case>>>>>>>>>>");
       },
       (result) {
-        emit(
-          state.copyWith(surveyStatus: FormzSubmissionStatus.success, surveyList: result,
+        emit(state.copyWith(surveyStatus: FormzSubmissionStatus.success, surveyList: result,
           ));
+       print("--------------SUCCESS Case>>>>>>>>>>");
       },
     );
   }

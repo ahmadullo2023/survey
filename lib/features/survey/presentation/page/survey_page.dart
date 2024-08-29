@@ -218,50 +218,22 @@ class _SurveyState extends State<Survey> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SurveyBloc, SurveyState>(builder: (context, state) {
-      return state.surveyList.id.isNotEmpty
-          ? Scaffold(
-              resizeToAvoidBottomInset: false,
-              backgroundColor: Colors.white,
-              appBar: widgetAppBar(state),
-              body: Column(
-                children: [
-                  divider,
-                  appBarWidget(state),
-                  const SizedBox(height: 5),
-                  linerProgress(state),
-                  SizedBox(height: 550, child: pageView(state)),
-                  const Spacer(),
-                  continueWidget(context, state),
-                  const SizedBox(height: 30),
-                ],
-              ))
-          : Scaffold(
-              body: Center(
-                child: AlertDialog(
-                  backgroundColor: Colors.grey,
-                  title: const Text("Not found"),
-                  titleTextStyle:
-                      const TextStyle(color: Colors.white, fontSize: 30),
-                  //content: Text('This is a simple dialog.'),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const FirstPage()));
-                      },
-                      child: const Text(
-                        'OK',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-    });
+    return BlocBuilder<SurveyBloc, SurveyState>(builder: (context, state) => Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.white,
+          appBar: widgetAppBar(state),
+          body: Column(
+            children: [
+              divider,
+              appBarWidget(state),
+              const SizedBox(height: 5),
+              linerProgress(state),
+              SizedBox(height: 550, child: pageView(state)),
+              const Spacer(),
+              continueWidget(context, state),
+              const SizedBox(height: 30),
+            ],
+          )),
+    );
   }
 }

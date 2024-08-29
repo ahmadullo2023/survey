@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gradient_elevated_button/gradient_elevated_button.dart';
+import 'package:survey/core/utils/formz.dart';
 import 'package:survey/features/survey/presentation/page/survey_page.dart';
 import '../bloc/survey_bloc.dart';
 
@@ -13,8 +14,6 @@ class SurveyRequest extends StatefulWidget {
 }
 
 class _SurveyRequestState extends State<SurveyRequest> {
-
-
   @override
   void initState() {
     super.initState();
@@ -68,7 +67,6 @@ class _SurveyRequestState extends State<SurveyRequest> {
         ],
       );
 
-
   Widget reward(SurveyState state) => Container(
       width: 142,
       height: 41,
@@ -78,12 +76,11 @@ class _SurveyRequestState extends State<SurveyRequest> {
       ),
       child: const Center(
           child: Text(
-            //state.surveyList.price.toString(),
-            "30 000 UZS",
-            style: const TextStyle(
-                color: Color(0xFF00B67A), fontWeight: FontWeight.w800),
-          )));
-
+        //state.surveyList.price.toString(),
+        "30 000 UZS",
+        style: const TextStyle(
+            color: Color(0xFF00B67A), fontWeight: FontWeight.w800),
+      )));
 
   Widget awardText(SurveyState state) => Padding(
       padding: const EdgeInsets.all(1),
@@ -98,7 +95,6 @@ class _SurveyRequestState extends State<SurveyRequest> {
             ],
           )));
 
-
   Widget award(SurveyState state) => Container(
       height: 91,
       width: 343,
@@ -108,41 +104,66 @@ class _SurveyRequestState extends State<SurveyRequest> {
       ),
       child: awardText(state));
 
-
   Widget get textWellBeGlad => const Text(
         "Будем рады за отдачу 🤗",
         style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
       );
 
-
   Widget get questionnaire => const Text(
       "Пройдите ещё один опросник и внесите вклад в улучшение наших услуг",
       textAlign: TextAlign.center);
 
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SurveyBloc, SurveyState>(builder: (context, state) {
-      return Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(),
-              const Spacer(),
-              SvgPicture.asset("assets/icons/Frame.svg"),
-              textWellBeGlad,
-              questionnaire,
-              const SizedBox(height: 15),
-              state.surveyList.price == 0 ? const SizedBox() : award(state),
-              const Spacer(),
-              wButtons(context, state),
-              const SizedBox(height: 40),
-            ],
+    return BlocBuilder<SurveyBloc, SurveyState>(
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: Center(
+            child: state.surveyStatus.isInProgress
+                ? const CircularProgressIndicator()
+                : state.surveyStatus.isSuccess
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Spacer(),
+                          const Spacer(),
+                          SvgPicture.asset("assets/icons/Frame.svg"),
+                          textWellBeGlad,
+                          questionnaire,
+                          const SizedBox(height: 15),
+                          state.surveyList.price == 0
+                              ? const SizedBox()
+                              : award(state),
+                          const Spacer(),
+                          wButtons(context, state),
+                          const SizedBox(height: 40),
+                        ],
+                      )
+                    : Center(
+                        child: AlertDialog(
+                          backgroundColor: Colors.grey,
+                          title: const Text("Not found"),
+                          titleTextStyle: const TextStyle(
+                              color: Colors.white, fontSize: 30),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => const Survey()));
+                              },
+                              child: const Text('OK',
+                                  style: TextStyle(color: Colors.white)),
+                            ),
+                          ],
+                        ),
+                      ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
