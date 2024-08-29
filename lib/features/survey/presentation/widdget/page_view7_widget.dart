@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:survey/features/survey/presentation/widdget/page_view1_widget.dart';
-
 import '../../domain/entities/survey_entities.dart';
 import '../bloc/survey_bloc.dart';
 
 class PageView7 extends StatefulWidget {
-  const PageView7({super.key, required this.survey, required this.index
-  });
+  const PageView7({super.key, required this.survey, required this.index});
 
   final GetSurveyEntity survey;
   final int index;
@@ -21,16 +18,27 @@ class _PageView7State extends State<PageView7> {
   int isCheek = 0;
 
 
-  List  _items =  ["EDKED","EDKED","EDKED","EDKED"];
   List<bool> _selected = [false, false, false, false];
+  bool value1 = false;
 
-  Widget cheekBoxCard(optionIndex, SurveyState state) =>
-        Card(
+
+  Widget cheekBoxCard(optionIndex, SurveyState state) => GestureDetector(
+    onTap: (){
+      setState(() {
+        value1 = !value1;
+        _selected[optionIndex] = value1;
+      });
+      context.read<SurveyBloc>().add(
+          IsSelect(isSelect: _selected.contains(true) ? true : false));
+    },
+    child: Card(
         elevation: 0,
         color: Colors.white,
         shape: RoundedRectangleBorder(
             side: BorderSide(
-           color: _selected[optionIndex] == true ? const Color(0xFF4489F7) : const Color(0xFFE0E5E9),
+              color: _selected[optionIndex] == true
+                  ? const Color(0xFF4489F7)
+                  : const Color(0xFFE0E5E9),
             ),
             borderRadius: BorderRadius.circular(15.0)),
         child: ListTile(
@@ -47,18 +55,17 @@ class _PageView7State extends State<PageView7> {
 
               context.read<SurveyBloc>().add(TemporaryAnsEvent(
                     temporarySurId: state.surveyList.id,
-                    temporaryQueId:
-                        state.surveyList.questions[widget.index].id!,
+                    temporaryQueId: state.surveyList.questions[widget.index].id!,
                     temporaryOptions: {
                       "answer": null,
                       "rate": null,
                       "options": [
-                        "${state.surveyList.questions[widget.index].options![optionIndex].id}",
+                      "${state.surveyList.questions[widget.index].options![optionIndex].id}",
                       ]
                     },
                   ));
-
-            },
+              },
+            ),
           ),
         ),
       );
@@ -78,8 +85,7 @@ class _PageView7State extends State<PageView7> {
           SizedBox(
             height: 430,
             child: ListView.builder(
-               itemCount: 4,
-               //widget.survey.questions[widget.index].options!.length,
+                itemCount: widget.survey.questions[widget.index].options!.length,
                 itemBuilder: (context, optionIndex) {
                   return cheekBoxCard(optionIndex, state);
                 }),
