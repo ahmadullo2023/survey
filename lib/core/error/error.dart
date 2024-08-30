@@ -1,9 +1,13 @@
 class ServerException implements Exception {
-  const ServerException({required this.message});
-
-  factory ServerException.fromJson(Map<String, dynamic> json) =>
-      ServerException(message: json['detail']);
   final String message;
+  final int statusCode;
+
+  const ServerException({required this.statusCode, required this.message});
+
+  @override
+  String toString() {
+    return 'ServerException(statusCode $statusCode   errorMessage: $message)';
+  }
 }
 
 class NoInternetException implements Exception {
@@ -11,10 +15,7 @@ class NoInternetException implements Exception {
 }
 
 class CacheException implements Exception {
-  const CacheException({required this.message});
-
   final String message;
 
-  @override
-  String toString() => message;
+  const CacheException({required this.message});
 }

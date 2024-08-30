@@ -13,8 +13,6 @@ class PageView5 extends StatefulWidget {
   State<PageView5> createState() => _PageView5State();
 }
 
-
-
 class _PageView5State extends State<PageView5> {
   TextEditingController surveyTextController = TextEditingController();
 
@@ -41,9 +39,8 @@ class _PageView5State extends State<PageView5> {
 
   Widget textFieldWidget(state) => Padding(
         padding: const EdgeInsets.all(12),
-        child: Container(
+        child: SizedBox(
           height: 200,
-         // color: const Color(0xFFF5F6F7),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +77,7 @@ class _PageView5State extends State<PageView5> {
                     borderRadius: BorderRadius.all(Radius.circular(12)),
                     borderSide: BorderSide(color: Colors.white, width: 1),
                   )
-                ),
+                 ),
                 maxLength: 100,
               ),
             ],

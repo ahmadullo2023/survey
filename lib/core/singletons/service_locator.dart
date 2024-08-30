@@ -23,7 +23,7 @@ Future<void> setupLocator() async {
 
   serviceLocator.registerLazySingleton(() => GetSurveyListUseCase());
 
-  serviceLocator.registerLazySingleton(() => SurveyDataSourceImpl());
+  serviceLocator.registerLazySingleton(() => SurveyDataSourceImpl(serviceLocator<DioSettings>().dio()));
   serviceLocator.registerLazySingleton(() => SurveyRepositoryImpl());
 
   serviceLocator.registerLazySingleton(() => AnswerRepositoryImpl());

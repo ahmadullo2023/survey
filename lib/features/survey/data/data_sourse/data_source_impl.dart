@@ -1,7 +1,9 @@
 part of 'data_source.dart';
 
 class SurveyDataSourceImpl implements SurveyDataSource {
-  final Dio dio = serviceLocator<DioSettings>().dio();
+  final Dio dio;
+
+  SurveyDataSourceImpl(this.dio);
 
   @override
   Future<SurveyInfoModel> getSurveyList() async {
@@ -16,12 +18,15 @@ class SurveyDataSourceImpl implements SurveyDataSource {
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return SurveyInfoModel.fromJson(response.data);
       } else {
-        throw ServerException.fromJson(response.data);
+        throw ServerException(
+          message: response.data.toString(),
+          statusCode: response.statusCode ?? 500,
+        );
       }
-    } on DioException catch (e) {
-      throw ServerException.fromJson(e.response?.data);
+    } on DioException {
+      rethrow;
     } on FormatException {
-      throw const ServerException(message: 'ERROR');
+      rethrow;
     }
   }
 
@@ -39,12 +44,15 @@ class SurveyDataSourceImpl implements SurveyDataSource {
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return;
       } else {
-        throw ServerException.fromJson(response.data);
+        throw ServerException(
+          message: response.data,
+          statusCode: response.statusCode ?? 500,
+        );
       }
-    } on DioException catch (e) {
-      throw ServerException.fromJson(e.response?.data);
+    } on DioException {
+      rethrow;
     } on FormatException {
-      throw const ServerException(message: 'ERROR');
+      rethrow;
     }
   }
 
@@ -61,17 +69,21 @@ class SurveyDataSourceImpl implements SurveyDataSource {
         options: Options(headers: {
           'Authorization':
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3MzI5NDc4LCJpYXQiOjE3MjQ3Mzc0NzgsImp0aSI6IjgwYmY1ZGZlMjE3NjQxOGRiMTY4ZjYwNzEyZDIxNWM4IiwidXNlcl9pZCI6IjA5MmI2ZmE0LTlmMTMtNGMxMC05NjM3LTlhZTQxYzkwZmRhYyIsImRldmljZV9pZCI6IkY4MEVEN0YwLUZFMkEtNDNFNC1CRTU1LUQ0OEZGQUQzQTJDMiJ9.cpRnAgIDaWZ0H5R8bmaSCMp04oDwL6eUf0B6B67RARQ"
+
         }),
       );
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return;
       } else {
-        throw ServerException.fromJson(response.data);
+        throw ServerException(
+          message: response.data,
+          statusCode: response.statusCode ?? 500,
+        );
       }
-    } on DioException catch (e) {
-      throw ServerException.fromJson(e.response?.data);
+    } on DioException {
+      rethrow;
     } on FormatException {
-      throw const ServerException(message: 'ERROR');
+      rethrow;
     }
   }
 
@@ -93,14 +105,15 @@ class SurveyDataSourceImpl implements SurveyDataSource {
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return;
       } else {
-        throw ServerException.fromJson(response.data);
+        throw ServerException(
+          message: response.data,
+          statusCode: response.statusCode ?? 500,
+        );
       }
-    } on DioException catch (e) {
-      throw ServerException.fromJson(e.response?.data);
+    } on DioException {
+      rethrow;
     } on FormatException {
-      throw const ServerException(message: 'ERROR');
+      rethrow;
     }
   }
-
-
 }

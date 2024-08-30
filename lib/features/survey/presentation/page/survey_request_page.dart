@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gradient_elevated_button/gradient_elevated_button.dart';
 import 'package:survey/core/utils/formz.dart';
+import 'package:survey/features/survey/presentation/page/first_page.dart';
 import 'package:survey/features/survey/presentation/page/survey_page.dart';
 import '../bloc/survey_bloc.dart';
 
@@ -123,8 +124,7 @@ class _SurveyRequestState extends State<SurveyRequest> {
             child: state.surveyStatus.isInProgress
                 ? const CircularProgressIndicator()
                 : state.surveyStatus.isSuccess
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                ? Column(mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Spacer(),
                           const Spacer(),
@@ -153,7 +153,7 @@ class _SurveyRequestState extends State<SurveyRequest> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => const Survey()));
+                                        builder: (_) => const FirstPage()));
                               },
                               child: const Text('OK',
                                   style: TextStyle(color: Colors.white)),

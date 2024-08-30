@@ -2,6 +2,7 @@
 //
 // import '../../singletons/service_locator.dart';
 // import '../../singletons/storage/storage.dart';
+// import '../../singletons/streams/streems.dart';
 //
 // class CustomInterceptor implements Interceptor {
 //   final Dio dio;
@@ -121,29 +122,29 @@
 //     handler.next(response);
 //   }
 //
-//   Future<void> _refreshToken() async {
-//     isRefreshAllowed = false;
-//     if (StorageRepository.getString(StoreKeys.refresh).isNotEmpty) {
-//       try {
-//         var refreshToken = StorageRepository.getString(StoreKeys.refresh);
-//         final response = await dio.post(
-//           '${AppConstants.BASE_URL_PROD_ID}/TokenRefresh/',
-//           data: {"refresh": refreshToken},
-//         );
-//         if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-//           StorageRepository.putString(StoreKeys.token, 'Bearer ${response.data['access']}');
-//           StorageRepository.putString(StoreKeys.refresh, "${response.data['refresh']}");
-//
-//           serviceLocator<IsAuthenticatedStream>().sink.add(true);
-//         } else {
-//           serviceLocator<IsAuthenticatedStream>().sink.add(false);
-//         }
-//       } catch (e) {
-//         print('Error refreshing token: $e');
-//         serviceLocator<IsAuthenticatedStream>().sink.add(false);
-//       }
-//     }
-//   }
+//   // Future<void> _refreshToken() async {
+//   //   isRefreshAllowed = false;
+//   //   if (StorageRepository.getString(StoreKeys.refresh).isNotEmpty) {
+//   //     try {
+//   //       var refreshToken = StorageRepository.getString(StoreKeys.refresh);
+//   //       final response = await dio.post(
+//   //         '${AppConstants.BASE_URL_PROD_ID}/TokenRefresh/',
+//   //         data: {"refresh": refreshToken},
+//   //       );
+//   //       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+//   //         StorageRepository.putString(StoreKeys.token, 'Bearer ${response.data['access']}');
+//   //         StorageRepository.putString(StoreKeys.refresh, "${response.data['refresh']}");
+//   //
+//   //         serviceLocator<IsAuthenticatedStream>().sink.add(true);
+//   //       } else {
+//   //         serviceLocator<IsAuthenticatedStream>().sink.add(false);
+//   //       }
+//   //     } catch (e) {
+//   //       print('Error refreshing token: $e');
+//   //       serviceLocator<IsAuthenticatedStream>().sink.add(false);
+//   //     }
+//   //   }
+//   // }
 //
 //   Future<Response<dynamic>> _resolveResponse(RequestOptions options) async {
 //     isRequestNotAllowed = true;

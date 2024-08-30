@@ -22,7 +22,9 @@ class _PageView7State extends State<PageView7> {
   bool value1 = false;
 
 
-  Widget cheekBoxCard(optionIndex, SurveyState state) => GestureDetector(
+  Widget cheekBoxCard(optionIndex, SurveyState state) => Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      child: GestureDetector(
     onTap: (){
       setState(() {
         value1 = !value1;
@@ -68,6 +70,7 @@ class _PageView7State extends State<PageView7> {
             ),
           ),
         ),
+      ),
       );
 
 

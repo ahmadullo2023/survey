@@ -29,15 +29,14 @@ class _PageView1State extends State<PageView2> {
             });
 
             context.read<SurveyBloc>().add(TemporaryAnsEvent(
-              temporarySurId: state.surveyList.id,
-              temporaryQueId: state.surveyList.questions[widget.index].id!,
-              temporaryOptions: {
-                "answer": null,
-                "rate": number,
-                "options": const []
-              },
-            ));
-
+                  temporarySurId: state.surveyList.id,
+                  temporaryQueId: state.surveyList.questions[widget.index].id!,
+                  temporaryOptions: {
+                    "answer": null,
+                    "rate": number,
+                    "options": const []
+                  },
+                ));
           },
           child: SizedBox(
             height: 70,
@@ -47,33 +46,31 @@ class _PageView1State extends State<PageView2> {
         ),
       );
 
+  Widget get textQuestion =>
+      Text(widget.survey.questions[widget.index].question.toString(),
+          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
+          textAlign: TextAlign.center);
 
-  Widget get textQuestion => Text(widget.survey.questions[widget.index].question.toString(),
-      style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
-      textAlign: TextAlign.center);
-
-
-  Widget get emojisButtons =>  Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: [
-      moodImaNum >= 1
-          ? gestureMood("assets/mood_emoge/EmojiLight1.png", 1)
-          : gestureMood("assets/mood_emoge/Emoji1.png", 1),
-      moodImaNum >= 2
-          ? gestureMood("assets/mood_emoge/EmojiLight2.png", 2)
-          : gestureMood("assets/mood_emoge/Emoji2.png", 2),
-      moodImaNum >= 3
-          ? gestureMood("assets/mood_emoge/EmojiLight3.png", 3)
-          : gestureMood("assets/mood_emoge/Emoji3.png", 3),
-      moodImaNum >= 4
-          ? gestureMood("assets/mood_emoge/EmojiLight4.png", 4)
-          : gestureMood("assets/mood_emoge/Emoji4.png", 4),
-      moodImaNum >= 5
-          ? gestureMood("assets/mood_emoge/EmojiLight5.png", 5)
-          : gestureMood("assets/mood_emoge/Emoji5.png", 5),
-    ],
-  );
-
+  Widget get emojisButtons => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          moodImaNum >= 1
+              ? gestureMood("assets/mood_emoge/EmojiLight1.png", 1)
+              : gestureMood("assets/mood_emoge/Emoji1.png", 1),
+          moodImaNum >= 2
+              ? gestureMood("assets/mood_emoge/EmojiLight2.png", 2)
+              : gestureMood("assets/mood_emoge/Emoji2.png", 2),
+          moodImaNum >= 3
+              ? gestureMood("assets/mood_emoge/EmojiLight3.png", 3)
+              : gestureMood("assets/mood_emoge/Emoji3.png", 3),
+          moodImaNum >= 4
+              ? gestureMood("assets/mood_emoge/EmojiLight4.png", 4)
+              : gestureMood("assets/mood_emoge/Emoji4.png", 4),
+          moodImaNum >= 5
+              ? gestureMood("assets/mood_emoge/EmojiLight5.png", 5)
+              : gestureMood("assets/mood_emoge/Emoji5.png", 5),
+        ],
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +80,9 @@ class _PageView1State extends State<PageView2> {
         const SizedBox(height: 10),
         textQuestion,
         const SizedBox(height: 20),
-        emojisButtons
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: emojisButtons),
       ],
     );
   }

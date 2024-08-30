@@ -76,7 +76,10 @@ class _PageView1State extends State<PageView1> {
         const SizedBox(height: 10),
         textQuestion,
         const SizedBox(height: 20),
-        startsButtons,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: startsButtons,
+        )
       ],
     );
   }

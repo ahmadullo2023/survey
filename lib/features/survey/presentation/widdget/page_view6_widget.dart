@@ -45,7 +45,9 @@ class _PageView6State extends State<PageView6> {
       );
 
 
-  Widget answerCard(int index, SurveyState state) => GestureDetector(
+  Widget answerCard(int index, SurveyState state) => Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+    child: GestureDetector(
       onTap: () {
         setState(() {
           selectedValue = index;
@@ -63,8 +65,8 @@ class _PageView6State extends State<PageView6> {
                 ]
               },
             ));
-      },
 
+      },
 
       child: Card(
         elevation: 0,
@@ -77,7 +79,7 @@ class _PageView6State extends State<PageView6> {
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: answerListTile(index, state, selectedValue),
-      ));
+      )));
 
   Widget answerListView(SurveyState state) => SizedBox(
         height: 430,
@@ -89,7 +91,8 @@ class _PageView6State extends State<PageView6> {
         ),
       );
 
-  Widget get questionText => Text(widget.survey.questions[widget.index].question.toString(),
+  Widget get questionText => Text(
+      widget.survey.questions[widget.index].question.toString(),
       style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
       textAlign: TextAlign.center);
 

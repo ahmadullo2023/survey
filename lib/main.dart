@@ -1,3 +1,4 @@
+import 'package:chuck_interceptor/chuck.dart';
 import 'package:flutter/material.dart';
 import 'app.dart';
 import 'core/singletons/app_path_provider.dart';
@@ -11,4 +12,5 @@ void main() async {
   await setupLocator();
 
   runApp(const MyApp());
+
 }
